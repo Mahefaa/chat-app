@@ -2,6 +2,8 @@ import {useForm} from 'react-hook-form';
 import {createUser} from "@/client/user";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
+import {GetServerSideProps} from "next";
+import Link from "next/link";
 
 export default function SignUpPage() {
     const router = useRouter();
@@ -48,7 +50,20 @@ export default function SignUpPage() {
                     {errors.bio && <span>{errors.bio.message}</span>}
                 </div>
                 <button type="submit">Sign Up</button>
+                <Link href={"/login"}>Already have an account ?</Link>
             </form>
         </div>
     );
+}
+
+export function getServerSideProps({req}: GetServerSideProps) {
+    if (req.cookies.token) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: true
+            }
+        }
+    }
+    return {props: {}}
 }
