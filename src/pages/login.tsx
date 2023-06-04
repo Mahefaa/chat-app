@@ -3,6 +3,7 @@ import {login, credentials} from "@/client/user";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
 import {GetServerSideProps} from "next";
+import Link from "next/link";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -37,6 +38,7 @@ export default function LoginPage() {
                     {errors.password && <span>{errors.password.message}</span>}
                 </div>
                 <button type="submit">Login</button>
+                <Link href={"/sign-up"}>Already have an account ?</Link>
             </form>
         </div>
     );
