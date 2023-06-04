@@ -32,3 +32,10 @@ export type Api<T, key extends string> = {
 } & {
     [P in key]: T;
 };
+export type createUser = credentials & Pick<User, "name" | "bio">;
+
+export const createUser = async (user: createUser) => {
+    return await client
+        .post<Api<AuthenticatedUser, "user">>("/users", user)
+        .then(({data}) => data.user);
+};
