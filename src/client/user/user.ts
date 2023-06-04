@@ -39,3 +39,27 @@ export const createUser = async (user: createUser) => {
         .post<Api<AuthenticatedUser, "user">>("/users", user)
         .then(({data}) => data.user);
 };
+
+export const getCurrentUser = async (token: string) => {
+    return await client
+        .get<Api<User, "user">>(`/user`, getHeaders(token))
+        .then(({data}) => data.user);
+};
+export type updateUser = Omit<User, "email" | "id" | "googleId" | "image" | "status" | "password"> & {
+    oldPassword?: string
+}
+export const updateCurrentUser = async (token: string, data: updateUser) => {
+    return await client
+        .put<Api<User, "user">>(`user`, data, getHeaders(token))
+}
+
+function getHeaders(token: string) {
+    if (!token) {
+        throw new Error("no token")
+    }
+    return {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+}
