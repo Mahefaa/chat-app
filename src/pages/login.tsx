@@ -38,7 +38,7 @@ export default function LoginPage() {
                     {errors.password && <span>{errors.password.message}</span>}
                 </div>
                 <button type="submit">Login</button>
-                <Link href={"/sign-up"}>Already have an account ?</Link>
+                <Link href={"/sign-up"}>create account ?</Link>
             </form>
         </div>
     );
