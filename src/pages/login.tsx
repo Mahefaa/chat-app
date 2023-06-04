@@ -2,6 +2,7 @@ import {useForm} from 'react-hook-form';
 import {login, credentials} from "@/client/user";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
+import {GetServerSideProps} from "next";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -16,7 +17,7 @@ export default function LoginPage() {
         // Perform login logic here
         login(credentials)
             .then((data) => {
-                Cookies.set('token', data.data.token)
+                Cookies.set('token', data.token)
                 router.push("/profile")
             })
     };
@@ -39,4 +40,16 @@ export default function LoginPage() {
             </form>
         </div>
     );
+}
+
+export function getServerSideProps({req}: GetServerSideProps) {
+    if (req.cookies.token) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: true
+            }
+        }
+    }
+    return {props: {}}
 }

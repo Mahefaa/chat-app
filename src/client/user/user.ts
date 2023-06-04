@@ -23,8 +23,8 @@ export enum UserStatus {
 }
 
 export async function login(credentials: credentials) {
-    return await client.post<Api<any, any>>("/users/login", credentials)
-        .then((data) => data)
+    return await client.post<Api<AuthenticatedUser, "user">>("/users/login", credentials)
+        .then((data) => data.data.user)
 }
 
 export type Api<T, key extends string> = {
