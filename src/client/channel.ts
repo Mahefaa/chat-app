@@ -22,3 +22,9 @@ export const createChannel = async (token: string, toCreate: CreateChannel): Pro
         .post<Api<Channel, "channel">>("/channel", toCreate, getHeaders(token))
         .then(({data}) => data.channel);
 };
+
+export const getChannelById = async (token: string, id: number): Promise<Channel> => {
+    return await client
+        .get<Api<Channel, "channel">>(`/channel/${id}`, getHeaders(token))
+        .then(({data}) => data.channel);
+};
