@@ -22,7 +22,7 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
         data.members = selectedUsers;
         createChannel(Cookies.get("token")!.toString(), data)
             .then((data) => {
-                    router.reload()
+                    router.push(`/channel/${data.id}`)
                 }
             );
     };
