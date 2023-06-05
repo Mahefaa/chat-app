@@ -48,3 +48,8 @@ export const updateCurrentUser = async (token: string, data: updateUser) => {
     return await client
         .put<Api<User, "user">>(`user`, data, getHeaders(token))
 }
+export const getUsers = async (token: string) => {
+    return await client
+        .get<Api<User[], "users">>("/users", getHeaders(token))
+        .then((res) => res.data);
+};

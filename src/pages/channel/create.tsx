@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {CreateChannel, createChannel, User} from "@/client";
+import {CreateChannel, createChannel, getUsers, User} from "@/client";
 import {GetServerSideProps} from "next";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
@@ -21,7 +21,10 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
     const onSubmit = (data: CreateChannel) => {
         data.members = selectedUsers;
         createChannel(Cookies.get("token")!.toString(), data)
-            .then((data) => router.reload());
+            .then((data) => {
+                    router.reload()
+                }
+            );
     };
 
     const handleUserSelection = (event) => {
@@ -73,7 +76,7 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
     );
 }
 
-export function getServerSideProps({req}: GetServerSideProps) {
+export async function getServerSideProps({req}: GetServerSideProps) {
     if (!req.cookies.token) {
         return {
             redirect: {
@@ -82,9 +85,11 @@ export function getServerSideProps({req}: GetServerSideProps) {
             }
         }
     }
+    const otherUsers = await getUsers(req.cookies.token)
+        .then(res => res.users)
     return {
         props: {
-            otherUsers: []
+            otherUsers
         }
     }
 }
