@@ -1,6 +1,8 @@
 import {Channel, getChannelById} from "@/client";
 import {getMessagesByChannel, Message, sendMessageToChannel} from "@/client/message";
-
+import {GetServerSidePropsContext} from "next";
+import {useRouter} from "next/router";
+import {MessageForm} from "@/component/message";
 type channelPageProps = {
     channel: Channel,
     messages: Message[]
@@ -46,30 +48,4 @@ export async function getServerSideProps({req, query}: GetServerSidePropsContext
     const messages = await getMessagesByChannel(req.cookies.token, Number(cId))
         .then((data) => data)
     return {props: {channel, messages}}
-}
-
-import {useForm} from 'react-hook-form';
-import Cookies from "js-cookie";
-import {useRouter} from "next/router";
-import {GetServerSidePropsContext} from "next";
-
-type MessageFormProps = {
-    onSubmit: (data) => void
-}
-
-function MessageForm({onSubmit}: MessageFormProps) {
-    const {register, handleSubmit, reset} = useForm();
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label>Message</label>
-                <textarea
-                    rows={4}
-                    cols={50}
-                    {...register('message', {required: true})}
-                />
-            </div>
-            <button type="submit">Send Message</button>
-        </form>
-    );
 }
