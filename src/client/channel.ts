@@ -28,3 +28,19 @@ export const getChannelById = async (token: string, id: number): Promise<Channel
         .get<Api<Channel, "channel">>(`/channel/${id}`, getHeaders(token))
         .then(({data}) => data.channel);
 };
+
+export const addMembersToChannel = async (
+    token: string,
+    channelId: number,
+    members: number[]
+): Promise<Channel> => {
+    return await client
+        .post<any>(
+            `/channels/${channelId}/members`,
+            {
+                members,
+            },
+            getHeaders(token)
+        )
+        .then(({data}) => data);
+};

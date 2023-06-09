@@ -1,19 +1,22 @@
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
+import {useForm} from 'react-hook-form';
+import {useRouter} from 'next/router';
 import {GetServerSidePropsContext} from "next";
+import {addMembersToChannel, getUsers} from "@/client";
+import Cookies from "js-cookie";
 
-export default function EditChannelPage({ users }) {
-    const { register, handleSubmit } = useForm();
+export default function EditChannelPage({users}) {
+    const {register, handleSubmit} = useForm();
     const router = useRouter();
-    const { channel_id } = router.query;
+    const {cid} = router.query;
 
     const onSubmit = (data) => {
         // Perform channel editing logic here with the submitted data
-        console.log(`Channel ID: ${channel_id}`);
+        console.log(`Channel ID: ${cid}`);
         console.log('Additional Users:', data.users);
-
-        // Redirect to the channel page after editing
-        router.push(`/channel/${channel_id}`);
+        addMembersToChannel(Cookies.get('token')!.toString(), Number(cid), data.users)
+            .then((data) => {
+                router.push(`/channel/${cid}`);
+            });
     };
 
     return (
@@ -36,6 +39,20 @@ export default function EditChannelPage({ users }) {
     );
 }
 
-export function getServerSideProps({req}:GetServerSidePropsContext){
-
+export async function getServerSideProps({req}: GetServerSidePropsContext) {
+    if (!req.cookies.token) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: true
+            }
+        }
+    }
+    const users = await getUsers(req.cookies.token)
+        .then(res => res.users);
+    return {
+        props: {
+            users
+        }
+    }
 }

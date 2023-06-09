@@ -31,7 +31,7 @@ export default function ChannelPage({channel, messages}: channelPageProps) {
     );
 };
 
-export async function getServerSideProps({req, query}) {
+export async function getServerSideProps({req, query}: GetServerSidePropsContext) {
     if (!req.cookies.token) {
         return {
             redirect: {
@@ -51,6 +51,7 @@ export async function getServerSideProps({req, query}) {
 import {useForm} from 'react-hook-form';
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
+import {GetServerSidePropsContext} from "next";
 
 type MessageFormProps = {
     onSubmit: (data) => void
