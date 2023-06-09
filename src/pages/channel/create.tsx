@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {CreateChannel, createChannel, getUsers, User} from "@/client";
-import {GetServerSideProps} from "next";
+import {GetServerSidePropsContext} from "next";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
 
@@ -76,7 +76,7 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
     );
 }
 
-export async function getServerSideProps({req}: GetServerSideProps) {
+export async function getServerSideProps({req}: GetServerSidePropsContext) {
     if (!req.cookies.token) {
         return {
             redirect: {

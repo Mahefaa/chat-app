@@ -2,7 +2,7 @@ import {useForm} from 'react-hook-form';
 import {login, credentials} from "@/client/user";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
-import {GetServerSideProps} from "next";
+import {GetServerSidePropsContext} from "next";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -44,7 +44,7 @@ export default function LoginPage() {
     );
 }
 
-export function getServerSideProps({req}: GetServerSideProps) {
+export function getServerSideProps({req}: GetServerSidePropsContext) {
     if (req.cookies.token) {
         return {
             redirect: {

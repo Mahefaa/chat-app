@@ -2,7 +2,7 @@ import {useForm} from 'react-hook-form';
 import {createUser} from "@/client/user";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
-import {GetServerSideProps} from "next";
+import {GetServerSidePropsContext} from "next";
 import Link from "next/link";
 
 export default function SignUpPage() {
@@ -56,7 +56,7 @@ export default function SignUpPage() {
     );
 }
 
-export function getServerSideProps({req}: GetServerSideProps) {
+export function getServerSideProps({req}: GetServerSidePropsContext) {
     if (req.cookies.token) {
         return {
             redirect: {

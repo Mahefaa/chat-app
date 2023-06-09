@@ -1,4 +1,4 @@
-import {GetServerSideProps} from "next";
+import {GetServerSidePropsContext} from "next";
 import {getCurrentUser, updateCurrentUser, updateUser, User} from "@/client/user";
 
 import {useForm} from 'react-hook-form';
@@ -101,7 +101,7 @@ export default function ProfilePage(props: profileProps) {
 }
 
 
-export async function getServerSideProps({req}: GetServerSideProps) {
+export async function getServerSideProps({req}: GetServerSidePropsContext) {
     if (!req.cookies.token) {
         return {
             redirect: {
