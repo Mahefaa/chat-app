@@ -16,7 +16,7 @@ export function MessageForm({onSubmit}: MessageFormProps) {
                     {...register('message', {required: true})}
                 />
             </div>
-            <button type="submit">Send Message</button>
+            <button type="submit" className={"sendMessageButton"}>Send Message</button>
         </form>
     );
 }
