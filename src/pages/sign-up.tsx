@@ -7,12 +7,13 @@ import Link from "next/link";
 
 export default function SignUpPage() {
     const router = useRouter();
-    const {register, handleSubmit, formState: {errors}, setValue} = useForm({
+    const {register, handleSubmit, formState: {errors}, setValue,watch} = useForm({
         defaultValues: {
             email: '',
             password: '',
             name: '',
-            bio: ''
+            bio: '',
+            confirmPassword: ''
         }
     });
 
@@ -24,14 +25,20 @@ export default function SignUpPage() {
                 router.push("/")
             })
     };
+    const watchPassword = watch('password', '');
 
     return (
         <div>
             <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form name={"registrationForm"} onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <label>Name</label>
+                    <input type="text" {...register('name', {required: 'Name is required'})} />
+                    {errors.name && <span>{errors.name.message}</span>}
+                </div>
                 <div>
                     <label>Email</label>
-                    <input type="text" {...register('email', {required: 'Email is required'})} />
+                    <input type="email" {...register('email', {required: 'Email is required'})} />
                     {errors.email && <span>{errors.email.message}</span>}
                 </div>
                 <div>
@@ -40,16 +47,22 @@ export default function SignUpPage() {
                     {errors.password && <span>{errors.password.message}</span>}
                 </div>
                 <div>
-                    <label>Name</label>
-                    <input type="text" {...register('name', {required: 'Name is required'})} />
-                    {errors.name && <span>{errors.name.message}</span>}
+                    <label>Confirm Password</label>
+                    <input
+                        type="password"
+                        {...register('confirmPassword', {
+                            required: 'Confirm password is required',
+                            validate: (value) => value === watchPassword || 'Passwords do not match',
+                        })}
+                    />
+                    {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
                 </div>
                 <div>
                     <label>Bio</label>
                     <textarea {...register('bio')} />
                     {errors.bio && <span>{errors.bio.message}</span>}
                 </div>
-                <button type="submit">Sign Up</button>
+                <button type="submit" className={"registerButton"}>Register</button>
                 <Link href={"/login"}>Already have an account ?</Link>
             </form>
         </div>
