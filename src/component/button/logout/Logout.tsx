@@ -1,7 +1,11 @@
 import {useRouter} from 'next/router';
 import Cookies from 'js-cookie';
 
-export function LogoutButton() {
+type logoutButtonProps = {
+    hidden: boolean
+}
+
+export function LogoutButton({hidden}: logoutButtonProps) {
     const router = useRouter();
 
     const handleLogout = () => {
@@ -10,6 +14,6 @@ export function LogoutButton() {
     };
 
     return (
-        <button onClick={handleLogout} className={"logoutButton"}>Logout</button>
+        <button onClick={handleLogout} className={"logoutButton"} hidden={hidden}>Logout</button>
     );
 }
