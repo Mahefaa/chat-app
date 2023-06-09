@@ -21,8 +21,12 @@ export default function EditChannelPage({users}) {
 
     return (
         <div>
-            <h1>Edit Channel</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <h1>Edit Channel ${cid}</h1>
+            <form onSubmit={handleSubmit(onSubmit)} name={"editChannelForm"}>
+                <select name="type">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
                 <div>
                     <label>Additional Users</label>
                     <select multiple {...register('users')}>
@@ -33,7 +37,7 @@ export default function EditChannelPage({users}) {
                         ))}
                     </select>
                 </div>
-                <button type="submit">Add Users</button>
+                <button type="submit" className={"editChannelButton"}>Edit Channel</button>
             </form>
         </div>
     );
