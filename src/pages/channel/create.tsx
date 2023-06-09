@@ -8,19 +8,27 @@ import {useRouter} from "next/router";
 type createChannelProps = {
     otherUsers: User[]
 }
+type formData = {
+    channelName: string;
+    type: string;
+    members?: number[]
+}
 export default function CreateChannelPage({otherUsers}: createChannelProps) {
     const router = useRouter();
     const {register, handleSubmit} = useForm({
         defaultValues: {
-            name: '',
+            channelName: '',
             type: 'public'
         }
     });
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
-    const onSubmit = (data: CreateChannel) => {
-        data.members = selectedUsers;
-        createChannel(Cookies.get("token")!.toString(), data)
+    const onSubmit = (data: formData) => {
+        createChannel(Cookies.get("token")!.toString(), {
+            name: data.channelName,
+            type: data.type,
+            members: selectedUsers
+        })
             .then((data) => {
                     router.push(`/channel/${data.id}`)
                 }
@@ -41,19 +49,19 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
     return (
         <div>
             <h1>Create Channel</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} name={"createChannelForm"}>
                 <div>
                     <label>Name</label>
                     <input
                         type="text"
-                        {...register('name')}
+                        {...register('channelName')}
                     />
                 </div>
                 <div>
                     <label>Type</label>
                     <select {...register('type')}>
-                        <option value={"public"} defaultChecked={true}>public</option>
-                        <option value={"private"}>private</option>
+                        <option value={"public"} defaultChecked={true}>Public</option>
+                        <option value={"private"}>Private</option>
                     </select>
                 </div>
                 <div>
@@ -70,7 +78,7 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
                         </div>
                     ))}
                 </div>
-                <button type="submit">Create Channel</button>
+                <button type="submit" className={"createChannelButton"}>Create Channel</button>
             </form>
         </div>
     );
