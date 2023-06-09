@@ -26,10 +26,10 @@ export default function LoginPage() {
     return (
         <div>
             <h1>Login Page</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} name={"loginForm"}>
                 <div>
                     <label>Email</label>
-                    <input type="text" {...register('email', {required: 'Email is required'})} />
+                    <input type="email" {...register('email', {required: 'Email is required'})} />
                     {errors.email && <span>{errors.email.message}</span>}
                 </div>
                 <div>
@@ -37,7 +37,7 @@ export default function LoginPage() {
                     <input type="password" {...register('password', {required: 'Password is required'})} />
                     {errors.password && <span>{errors.password.message}</span>}
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className={"loginButton"}>Login</button>
                 <Link href={"/sign-up"}>create account ?</Link>
             </form>
         </div>
