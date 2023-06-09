@@ -46,3 +46,8 @@ export const sendMessageToRecipient = async (
         content,
     });
 };
+export const getMessagesByUser = async (token: string, uid: number) => {
+    return await client
+        .get<Api<Message[], "messages">>(`/messages/${uid}`, getHeaders(token))
+        .then(({data}) => data.messages);
+};
