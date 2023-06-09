@@ -17,12 +17,11 @@ export default function ProfilePage(props: profileProps) {
         defaultValues: {
             name: name || '',
             bio: bio || '',
-            password: '',
+            currentPassword: '',
             newPassword: '',
             confirmPassword: ''
         }
     });
-    const [willUpdatePassword, setWillUpdatePassword] = useState(false);
     const onSubmit = (updatedUser: updateUser) => {
         // Perform update logic here with the submitted data
         updateCurrentUser(Cookies.get('token')!.toString(), updatedUser)
@@ -30,13 +29,12 @@ export default function ProfilePage(props: profileProps) {
                 router.reload()
             })
     };
-    const handlePasswordCheckbox = () => setWillUpdatePassword((prev) => !prev)
     const watchPassword = watch('newPassword', '');
 
     return (
         <div>
             <h1>Profile</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} name={"editProfileForm"}>
                 <div>
                     <label>Name</label>
                     <input
@@ -59,42 +57,36 @@ export default function ProfilePage(props: profileProps) {
                     ></textarea>
                 </div>
                 <div>
-                    <label htmlFor={"checkbox"}>Update password ?</label>
-                    <input type={"checkbox"} onChange={handlePasswordCheckbox} name={"checkbox"}/>
-                    {willUpdatePassword &&
-                        <>
-                            <div>
-                                <label>Current Password</label>
-                                <input
-                                    type="password"
-                                    {...register('password',
-                                        {required: `Current password is required`})}
-                                />
-                                {errors.password && <span>{errors.password.message}</span>}
-                            </div>
-                            <div>
-                                <label>New Password</label>
-                                <input
-                                    type="password"
-                                    {...register('newPassword', {required: 'New password is required'})}
-                                />
-                                {errors.newPassword && <span>{errors.newPassword.message}</span>}
-                            </div>
-                            <div>
-                                <label>Confirm Password</label>
-                                <input
-                                    type="password"
-                                    {...register('confirmPassword', {
-                                        required: 'Confirm password is required',
-                                        validate: (value) => value === watchPassword || 'Passwords do not match',
-                                    })}
-                                />
-                                {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
-                            </div>
-                        </>
-                    }
+                    <div>
+                        <label>Current Password</label>
+                        <input
+                            type="password"
+                            {...register('currentPassword',
+                                {required: `Current password is required`})}
+                        />
+                        {errors.currentPassword && <span>{errors.currentPassword.message}</span>}
+                    </div>
+                    <div>
+                        <label>New Password</label>
+                        <input
+                            type="password"
+                            {...register('newPassword', {required: 'New password is required'})}
+                        />
+                        {errors.newPassword && <span>{errors.newPassword.message}</span>}
+                    </div>
+                    <div>
+                        <label>Confirm Password</label>
+                        <input
+                            type="password"
+                            {...register('confirmPassword', {
+                                required: 'Confirm password is required',
+                                validate: (value) => value === watchPassword || 'Passwords do not match',
+                            })}
+                        />
+                        {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+                    </div>
                 </div>
-                <button type="submit">Update Profile</button>
+                <button type="submit" className={"updateProfileButton"}>Update Profile</button>
             </form>
         </div>
     );
