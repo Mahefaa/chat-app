@@ -1,5 +1,5 @@
-import {Channel, getChannelById} from "@/client";
-import {getMessagesByChannel, Message, sendMessageToChannel} from "@/client/message";
+import {Channel, getChannelById} from "../../common/client";
+import {getMessagesByChannel, Message, sendMessageToChannel} from "@/common/client/message";
 import {GetServerSidePropsContext} from "next";
 import {useRouter} from "next/router";
 import {MessageForm} from "@/component/message";

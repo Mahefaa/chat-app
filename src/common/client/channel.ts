@@ -1,5 +1,5 @@
-import {Api, getHeaders} from "@/client/global/utils";
-import {client} from "@/client/global";
+import {Api, getHeaders} from "@/common/client/global/utils";
+import {client} from "@/common/client/global";
 
 export type Channel = {
     name: string;

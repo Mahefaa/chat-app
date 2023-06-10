@@ -1,5 +1,5 @@
-import {client} from "@/client/global";
-import {Api, getHeaders} from "@/client/global/utils";
+import {client} from "@/common/client/global";
+import {Api, getHeaders} from "@/common/client/global/utils";
 
 export type credentials = Pick<User, "email" | "password">;
 export type User = {

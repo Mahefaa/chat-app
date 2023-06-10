@@ -1,5 +1,5 @@
 import {GetServerSidePropsContext} from "next";
-import {getCurrentUser, updateCurrentUser, updateUser, User} from "@/client/user";
+import {getCurrentUser, updateCurrentUser, updateUser, User} from "@/common/client/user";
 
 import {useForm} from 'react-hook-form';
 import {useState} from "react";

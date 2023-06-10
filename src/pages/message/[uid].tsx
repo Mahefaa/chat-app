@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import {MessageForm} from "@/component/message";
 import {Message} from "postcss";
 import {GetServerSidePropsContext} from "next";
-import {getMessagesByUser, sendMessageToRecipient} from "@/client/message";
+import {getMessagesByUser, sendMessageToRecipient} from "@/common/client/message";
 import Cookies from "js-cookie";
 
 type DirectMessagePageProps = {

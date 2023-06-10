@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form';
 import {useRouter} from 'next/router';
 import {GetServerSidePropsContext} from "next";
-import {addMembersToChannel, getUsers} from "@/client";
+import {addMembersToChannel, getUsers} from "../../../common/client";
 import Cookies from "js-cookie";
 
 export default function EditChannelPage({users}) {

@@ -1,6 +1,6 @@
-import {Api, getHeaders} from "@/client/global/utils";
-import {User} from "@/client/user";
-import {client} from "@/client/global";
+import {Api, getHeaders} from "@/common/client/global/utils";
+import {User} from "@/common/client/user";
+import {client} from "@/common/client/global";
 
 export type Message = {
     id: number;
