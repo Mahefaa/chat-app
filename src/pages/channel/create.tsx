@@ -1,9 +1,11 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {CreateChannel, createChannel, getUsers, User} from "@/client";
+import {createChannel, getUsers, User} from "@/common/client";
 import {GetServerSidePropsContext} from "next";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {createSchema} from "@/common/schema/channel";
 
 type createChannelProps = {
     otherUsers: User[]
@@ -19,7 +21,8 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
         defaultValues: {
             channelName: '',
             type: 'public'
-        }
+        },
+        resolver: yupResolver(createSchema)
     });
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 

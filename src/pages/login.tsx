@@ -1,9 +1,11 @@
 import {useForm} from 'react-hook-form';
-import {login, credentials} from "@/client/user";
+import {login, credentials} from "@/common/client/user";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
 import {GetServerSidePropsContext} from "next";
 import Link from "next/link";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {loginSchema} from "@/common/schema/authentication";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -11,7 +13,8 @@ export default function LoginPage() {
         defaultValues: {
             email: '',
             password: ''
-        }
+        },
+        resolver: (yupResolver(loginSchema))
     });
 
     const onSubmit = (credentials: credentials) => {

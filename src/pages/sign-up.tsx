@@ -1,20 +1,23 @@
 import {useForm} from 'react-hook-form';
-import {createUser} from "@/client/user";
+import {createUser} from "@/common/client/user";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
 import {GetServerSidePropsContext} from "next";
 import Link from "next/link";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {signUpSchema} from "@/common/schema/authentication";
 
 export default function SignUpPage() {
     const router = useRouter();
-    const {register, handleSubmit, formState: {errors}, setValue,watch} = useForm({
+    const {register, handleSubmit, formState: {errors}, setValue, watch} = useForm({
         defaultValues: {
             email: '',
             password: '',
             name: '',
             bio: '',
             confirmPassword: ''
-        }
+        },
+        resolver: yupResolver(signUpSchema)
     });
 
     const onSubmit = (toCreate: createUser) => {
