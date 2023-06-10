@@ -1,18 +1,26 @@
 import {useForm} from 'react-hook-form';
 import {useRouter} from 'next/router';
 import {GetServerSidePropsContext} from "next";
-import {addMembersToChannel, getUsers} from "../../../common/client";
+import {addMembersToChannel, getUsers, User} from "@/common/client";
 import Cookies from "js-cookie";
 
-export default function EditChannelPage({users}) {
-    const {register, handleSubmit} = useForm();
+type EditChannelProps = {
+    users: User[]
+}
+type EditChannelSubmitType = {
+    users: number[]
+}
+export default function EditChannelPage({users}: EditChannelProps) {
+    const {register, handleSubmit} = useForm({
+        defaultValues: {
+            users: []
+        }
+    });
     const router = useRouter();
     const {cid} = router.query;
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: EditChannelSubmitType) => {
         // Perform channel editing logic here with the submitted data
-        console.log(`Channel ID: ${cid}`);
-        console.log('Additional Users:', data.users);
         addMembersToChannel(Cookies.get('token')!.toString(), Number(cid), data.users)
             .then((data) => {
                 router.push(`/channel/${cid}`);

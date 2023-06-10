@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import {MessageForm} from "@/component/message";
+import {MessageForm, FormData} from "@/component/message";
 import {Message} from "postcss";
 import {GetServerSidePropsContext} from "next";
 import {getMessagesByUser, sendMessageToRecipient} from "@/common/client/message";
@@ -12,7 +12,7 @@ export default function DirectMessagePage({messages}: DirectMessagePageProps) {
     const router = useRouter();
     const {uid} = router.query;
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: FormData) => {
         sendMessageToRecipient(Cookies.get('token')!.toString(), Number(uid), data.message)
             .then((data) => {
                 router.reload();

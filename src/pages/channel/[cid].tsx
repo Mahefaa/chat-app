@@ -2,7 +2,7 @@ import {Channel, getChannelById} from "@/common/client";
 import {getMessagesByChannel, Message, sendMessageToChannel} from "@/common/client/message";
 import {GetServerSidePropsContext} from "next";
 import {useRouter} from "next/router";
-import {MessageForm} from "@/component/message";
+import {MessageForm, FormData} from "@/component/message";
 import Cookies from "js-cookie";
 
 type channelPageProps = {
@@ -12,7 +12,7 @@ type channelPageProps = {
 export default function ChannelPage({channel, messages}: channelPageProps) {
     const router = useRouter();
     let {createdAt, id, name, owner, type, updatedAt} = channel;
-    const onSubmit = (data) => {
+    const onSubmit = (data: FormData) => {
         sendMessageToChannel(Cookies.get('token')!.toString(), channel.id, data.message)
             .then(data => {
                 router.reload();

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {createChannel, getUsers, User} from "@/common/client";
 import {GetServerSidePropsContext} from "next";
@@ -38,13 +38,13 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
             );
     };
 
-    const handleUserSelection = (event) => {
+    const handleUserSelection = (event: ChangeEvent<HTMLInputElement>) => {
         const {value, checked} = event.target;
         if (checked) {
-            setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, value]);
+            setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, Number(value)]);
         } else {
             setSelectedUsers((prevSelectedUsers) =>
-                prevSelectedUsers.filter((user) => user !== value)
+                prevSelectedUsers.filter((user) => user !== Number(value))
             );
         }
     };
