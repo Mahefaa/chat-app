@@ -17,7 +17,7 @@ type formData = {
 }
 export default function CreateChannelPage({otherUsers}: createChannelProps) {
     const router = useRouter();
-    const {register, handleSubmit} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm({
         defaultValues: {
             channelName: '',
             type: 'public'
@@ -57,8 +57,9 @@ export default function CreateChannelPage({otherUsers}: createChannelProps) {
                     <label>Name</label>
                     <input
                         type="text"
-                        {...register('channelName')}
+                        {...register('channelName', {required: 'Channel Name is required'})}
                     />
+                    {errors.channelName && <span>{errors.channelName.message}</span>}
                 </div>
                 <div>
                     <label>Type</label>

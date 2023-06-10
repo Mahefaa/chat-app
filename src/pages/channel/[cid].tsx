@@ -1,8 +1,10 @@
-import {Channel, getChannelById} from "../../common/client";
+import {Channel, getChannelById} from "@/common/client";
 import {getMessagesByChannel, Message, sendMessageToChannel} from "@/common/client/message";
 import {GetServerSidePropsContext} from "next";
 import {useRouter} from "next/router";
 import {MessageForm} from "@/component/message";
+import Cookies from "js-cookie";
+
 type channelPageProps = {
     channel: Channel,
     messages: Message[]
